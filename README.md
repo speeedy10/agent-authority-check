@@ -47,9 +47,17 @@ No packages are required. The scanner makes no network requests and does not exe
 
 See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review checklist and [`EVIDENCE-SCHEMA.md`](./EVIDENCE-SCHEMA.md) for a compact evidence record.
 
+## Paid Quick Check in Telegram
+
+Want the preflight run for you on one public GitHub repository? The **Agent Authority Quick Check** is available for **25 Telegram Stars**:
+
+https://t.me/paroh_bot?start=quickcheck
+
+It runs static/public analysis only. Send `audit: https://github.com/owner/repo` after purchase, then `/report` to retrieve the latest result. Scanner hits remain observations, not vulnerability verdicts.
+
 ## Evidence-backed review
 
-For a bounded MCP / AI-agent review with an authority map, manual validation, evidence bundle, and remediation priorities:
+For a deeper bounded MCP / AI-agent review with an authority map, manual validation, evidence bundle, and remediation priorities:
 
 https://nyx-protocol-security-65h7iq.v2.appdeploy.ai/
 
