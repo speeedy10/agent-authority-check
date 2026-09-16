@@ -1,5 +1,7 @@
 # Agent Authority Check
 
+[![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
+
 A small, zero-dependency static preflight for MCP servers and tool-using AI agents.
 
 It answers a narrow question before a deeper security review: **where does this code appear to carry authority?**
