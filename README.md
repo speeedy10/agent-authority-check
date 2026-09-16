@@ -2,9 +2,11 @@
 
 [![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
 
-A small, zero-dependency static preflight for MCP servers and tool-using AI agents.
+Open-source static authority preflight for MCP servers and tool-using AI agents, maintained as part of **Nyx Protocol Security**.
 
-It answers a narrow question before a deeper security review: **where does this code appear to carry authority?**
+It answers one narrow question before a deeper review: **where does this code appear to carry meaningful authority?**
+
+## What it maps
 
 The scanner groups source-level observations around:
 
@@ -12,14 +14,14 @@ The scanner groups source-level observations around:
 - secrets and ambient credentials
 - network egress
 - filesystem access
-- shell/process execution
+- shell and process execution
 - database access
 - browser automation
-- payment/transaction surfaces
+- payment and transaction surfaces
 
-## Important: observations are not vulnerabilities
+## Evidence boundary
 
-A match is a review lead. It is not proof of exploitability, reachability, or consequence.
+A match is an observation, not a vulnerability verdict. It does not prove exploitability, reachability, or consequence.
 
 For a meaningful finding, close the chain:
 
@@ -27,7 +29,7 @@ For a meaningful finding, close the chain:
 SOURCE -> TRANSFORM -> SINK -> PRIVILEGE -> CONSEQUENCE
 ```
 
-Promote only when primitive + reachability + consequence are established.
+Promote only when **primitive + reachability + consequence** are established.
 
 ## Run it
 
@@ -37,33 +39,45 @@ python3 scan.py /path/to/repository > authority-scan.json
 
 No packages are required. The scanner makes no network requests and does not execute target code.
 
-## What to do with the output
+## Review workflow
 
 1. Start with classes that combine untrusted input and privileged authority.
 2. Trace the exact source-to-sink path manually.
 3. Verify authorization at the final action, not only at connection time.
-4. Use a bounded local/owned test when static evidence is insufficient.
-5. Record exact evidence and kill weak leads quickly.
+4. Use a bounded local or owned test when static evidence is insufficient.
+5. Record exact evidence and discard weak leads quickly.
 
 See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review checklist and [`EVIDENCE-SCHEMA.md`](./EVIDENCE-SCHEMA.md) for a compact evidence record.
 
-## Paid Quick Check in Telegram
+## Agent Authority Quick Check · 25 Telegram Stars
 
-Want the preflight run for you on one public GitHub repository? The **Agent Authority Quick Check** is available for **25 Telegram Stars**:
+For one public GitHub repository, the **Agent Authority Quick Check** runs the static preflight and returns an evidence-first report through Telegram:
 
 https://t.me/paroh_bot?start=quickcheck
 
-It runs static/public analysis only. Send `audit: https://github.com/owner/repo` after purchase, then `/report` to retrieve the latest result. Scanner hits remain observations, not vulnerability verdicts.
+After purchase, send:
 
-## Evidence-backed review
+```text
+audit: https://github.com/owner/repo
+```
 
-For a deeper bounded MCP / AI-agent review with an authority map, manual validation, evidence bundle, and remediation priorities:
+Then use `/report` when processing is complete. Quick Check remains public-source and static-only; scanner hits remain observations rather than vulnerability verdicts.
+
+## Nyx Protocol Security
+
+For deeper bounded review, Nyx Protocol Security offers fixed-scope assessments for MCP servers and tool-using AI agents, including authority mapping, manual validation, evidence bundles, remediation priorities, and authorized reproduction where needed.
 
 https://nyx-protocol-security-65h7iq.v2.appdeploy.ai/
 
+Current engagement options include:
+
+- **Security Pass** — one bounded target
+- **Deep Authority Review** — multi-component authority-chain analysis
+- **Change Monitor** — recurring diff-driven review
+
 ## Safety
 
-Use this project for source you are allowed to inspect. The tool is static-only; it does not exploit, authenticate to, or interact with target services.
+Use this project only for source you are allowed to inspect. The open-source scanner is static-only: it does not exploit, authenticate to, or interact with target services.
 
 ## License
 
