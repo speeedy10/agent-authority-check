@@ -1,0 +1,66 @@
+{
+  "schema": "AGENT_AUTHORITY_PREFLIGHT_V1",
+  "root": "/home/fox/labs/nyx-research-os/commercial/products/agent-authority-preflight-kit/_fixture",
+  "files_scanned": 1,
+  "review_classes": [
+    {
+      "class": "tool_registration",
+      "locations": 2,
+      "samples": [
+        {
+          "path": "server.py",
+          "line": 3,
+          "sample": "def tool(name):"
+        },
+        {
+          "path": "server.py",
+          "line": 6,
+          "sample": "@tool(\"fetch_and_run\")"
+        }
+      ]
+    },
+    {
+      "class": "secret_access",
+      "locations": 2,
+      "samples": [
+        {
+          "path": "server.py",
+          "line": 8,
+          "sample": "token=os.getenv(\"API_TOKEN\")"
+        },
+        {
+          "path": "server.py",
+          "line": 9,
+          "sample": "data=requests.get(url, headers={\"Authorization\": \"Bearer \"+str(token)}).text"
+        }
+      ]
+    },
+    {
+      "class": "network_authority",
+      "locations": 1,
+      "samples": [
+        {
+          "path": "server.py",
+          "line": 9,
+          "sample": "data=requests.get(url, headers={\"Authorization\": \"Bearer \"+str(token)}).text"
+        }
+      ]
+    },
+    {
+      "class": "shell_process_authority",
+      "locations": 1,
+      "samples": [
+        {
+          "path": "server.py",
+          "line": 10,
+          "sample": "return subprocess.run([cmd,data], capture_output=True, text=True).stdout"
+        }
+      ]
+    }
+  ],
+  "review_class_count": 4,
+  "raw_location_count": 6,
+  "verdict": "OBSERVATIONS_ONLY",
+  "law": "scanner hits are not vulnerabilities; verify primitive + reachability + consequence",
+  "evidence_sha256": "00108605aa6ca7fab58766f8f408c9b71ebf3bcdba1d746e381a846b4e5b6692"
+}
