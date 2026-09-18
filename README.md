@@ -2,20 +2,22 @@
 
 [![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
 
-Open-source static authority preflight for MCP servers and tool-using AI agents, maintained as part of **Nyx Protocol Security**.
+Open-source static authority preflight for MCP servers and tool-using AI agents, maintained by **FOXIFY**.
 
-It answers one narrow question before a deeper review: **where does this code appear to carry meaningful authority?**
+It answers one narrow question before a deeper review:
+
+> **Where does this code appear to carry meaningful authority?**
 
 ## What it maps
 
 The scanner groups source-level observations around:
 
-- tool registration
+- tool registration and exposed actions
 - secrets and ambient credentials
 - network egress
-- filesystem access
+- filesystem access and mutation
 - shell and process execution
-- database access
+- database access and mutation
 - browser automation
 - payment and transaction surfaces
 
@@ -31,7 +33,7 @@ SOURCE -> TRANSFORM -> SINK -> PRIVILEGE -> CONSEQUENCE
 
 Promote only when **primitive + reachability + consequence** are established.
 
-## Run it
+## Run the open-source scanner
 
 ```bash
 python3 scan.py /path/to/repository > authority-scan.json
@@ -49,31 +51,35 @@ No packages are required. The scanner makes no network requests and does not exe
 
 See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review checklist and [`EVIDENCE-SCHEMA.md`](./EVIDENCE-SCHEMA.md) for a compact evidence record.
 
-## Agent Authority Quick Check · 25 Telegram Stars
+## FOXIFY Agent Authority Quick Check · 25 Telegram Stars
 
-For one public GitHub repository, the **Agent Authority Quick Check** runs the static preflight and returns an evidence-first report through Telegram:
+Want the result without running the scanner yourself?
 
-https://t.me/paroh_bot?start=quickcheck
+FOXIFY offers a paid Quick Check for **one public GitHub repository**:
 
-After purchase, send:
+- 25 Telegram Stars
+- public GitHub repositories only
+- bounded static public-source analysis
+- no credentials
+- no private repository access
+- no active exploitation
+- evidence-first report with file/line observations
+- report remains restorable to the same Telegram account
 
-```text
-audit: https://github.com/owner/repo
-```
+Start here:
 
-Then use `/report` when processing is complete. Quick Check remains public-source and static-only; scanner hits remain observations rather than vulnerability verdicts.
+**https://foxify.pro**
 
-## Nyx Protocol Security
+After payment, paste the public GitHub repository URL directly into the FOXIFY chat. The same FOXIFY card moves from **Credit Ready → Processing → Report Ready**.
 
-For deeper bounded review, Nyx Protocol Security offers fixed-scope assessments for MCP servers and tool-using AI agents, including authority mapping, manual validation, evidence bundles, remediation priorities, and authorized reproduction where needed.
+No `audit:` prefix is required.
 
-https://nyx-protocol-security-65h7iq.v2.appdeploy.ai/
+## FOXIFY
 
-Current engagement options include:
+FOXIFY is focused on authority mapping for MCP servers and tool-using AI agents: what an agent can reach, mutate, execute, send, delete, or authorize, and which visible guardrails sit around those actions.
 
-- **Security Pass** — one bounded target
-- **Deep Authority Review** — multi-component authority-chain analysis
-- **Change Monitor** — recurring diff-driven review
+Website: **https://foxify.pro**  
+Contact: **contact@foxify.pro**
 
 ## Safety
 
