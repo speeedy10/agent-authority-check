@@ -55,6 +55,8 @@ See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review c
 
 Want the result without running the scanner yourself?
 
+See a synthetic delivery example first: **[SAMPLE-REPORT.md](./SAMPLE-REPORT.md)**
+
 FOXIFY offers a paid Quick Check for **one public GitHub repository**:
 
 - 25 Telegram Stars
