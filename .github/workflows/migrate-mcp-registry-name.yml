@@ -1,0 +1,83 @@
+name: Migrate FOXIFY MCP Registry Name
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/migrate-mcp-registry-name.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    env:
+      OLD_NAME: io.github.speeedy10/foxify-agent-commerce
+      NEW_NAME: io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight
+      VERSION: 0.1.0
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" -o /tmp/mcp-publisher.tgz
+          tar -xzf /tmp/mcp-publisher.tgz -C /tmp mcp-publisher
+          chmod +x /tmp/mcp-publisher
+
+      - name: Validate target metadata
+        run: /tmp/mcp-publisher validate mcp-registry/server.json
+
+      - name: Authenticate with GitHub OIDC
+        run: /tmp/mcp-publisher login github-oidc
+
+      - name: Migrate with rollback
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          rollback() {
+            echo "Migration failed; restoring old Registry alias..."
+            /tmp/mcp-publisher status --status active "$OLD_NAME" "$VERSION" || true
+          }
+          trap rollback ERR
+
+          /tmp/mcp-publisher status             --status deleted             --message "Renamed to $NEW_NAME for clearer capability discovery"             "$OLD_NAME" "$VERSION"
+
+          /tmp/mcp-publisher publish mcp-registry/server.json
+
+          python3 - <<'PY'
+          import json, time, urllib.parse, urllib.request, os
+
+          name = os.environ["NEW_NAME"]
+          old = os.environ["OLD_NAME"]
+
+          def search(server_name):
+              q = urllib.parse.urlencode({"version":"latest","search":server_name,"limit":100})
+              with urllib.request.urlopen("https://registry.modelcontextprotocol.io/v0.1/servers?"+q, timeout=20) as r:
+                  return json.load(r)
+
+          for _ in range(8):
+              data = search(name)
+              hits = [
+                  x for x in data.get("servers", [])
+                  if x.get("server", {}).get("name") == name
+                  and x.get("_meta", {}).get("io.modelcontextprotocol.registry/official", {}).get("status") == "active"
+              ]
+              if hits:
+                  break
+              time.sleep(3)
+          else:
+              raise SystemExit("NEW_ALIAS_NOT_ACTIVE_AFTER_PUBLISH")
+
+          old_data = search(old)
+          old_visible = any(x.get("server", {}).get("name") == old for x in old_data.get("servers", []))
+          if old_visible:
+              raise SystemExit("OLD_ALIAS_STILL_VISIBLE")
+
+          print("REGISTRY_NAME_MIGRATION_PASS")
+          PY
+
+          trap - ERR
