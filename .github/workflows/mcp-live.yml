@@ -45,7 +45,7 @@ jobs:
           accepts = data["accepts"][0]
 
           assert accepts["network"] == "eip155:8453"
-          assert accepts["amount"] == "100000"
+          assert accepts["amount"] == "50000"
           assert accepts["payTo"].lower() == "0xe51c6e8e5c28bc36130880c178072e0914808040"
           assert (data.get("extensions") or {}).get("bazaar")
           assert data["resource"]["url"].startswith("https://")
