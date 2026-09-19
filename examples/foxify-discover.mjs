@@ -1,8 +1,8 @@
-const alias = "io.github.speeedy10/foxify-agent-commerce";
+const alias = "io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight";
 const registry = new URL("https://registry.modelcontextprotocol.io/v0.1/servers");
 registry.searchParams.set("version", "latest");
 registry.searchParams.set("limit", "100");
-registry.searchParams.set("search", "agent-commerce");
+registry.searchParams.set("search", "payment-preflight");
 
 const listing = await (await fetch(registry)).json();
 const entry = (listing.servers || []).find(x => x && x.server && x.server.name === alias);
@@ -61,7 +61,7 @@ const info = await rpc(3, "tools/call", {
 const infoText = (((info.result || {}).content || []).find(x => x.type === "text") || {}).text || "{}";
 
 console.log(JSON.stringify({
-  registryQuery: "agent-commerce",
+  registryQuery: "payment-preflight",
   discovered: entry.server.name,
   remote,
   server: initialized.result && initialized.result.serverInfo,
