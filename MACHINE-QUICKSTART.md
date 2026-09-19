@@ -75,7 +75,7 @@ curl -i -X POST \
   }'
 ```
 
-The current paid-call price is **$0.10 USDC on Base**.
+The current paid-call price is **$0.05 USDC on Base**.
 
 ## 3. Pay only from your own local wallet/client
 
@@ -114,7 +114,7 @@ none
 Paid tool settlement:
 
 ```text
-x402 exact / Base / USDC / $0.10
+x402 exact / Base / USDC / $0.05
 ```
 
 ## Evidence boundary
