@@ -1,0 +1,54 @@
+name: FOXIFY MCP Live
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "examples/foxify-discover.mjs"
+      - "MACHINE-QUICKSTART.md"
+      - ".github/workflows/mcp-live.yml"
+      - "mcp-registry/server.json"
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Registry discovery to MCP free tool
+        run: node examples/foxify-discover.mjs
+
+      - name: Paid x402 challenge
+        shell: bash
+        run: |
+          set -euo pipefail
+          url='https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-preflight-paid'
+          headers="$(mktemp)"
+          curl -sS -D "$headers" -o /dev/null -X POST "$url"             -H 'content-type: application/json'             -H 'accept: application/json'             -d '{"intent_id":"github-live-proof","nonce":"github-live-nonce-12345678","expires_at":"2030-01-01T00:00:00Z","agent":{"signature_verified":true},"merchant":{"domain":"merchant.example"},"payment":{"network":"eip155:8453","currency":"USDC","amount":"10","recipient":"0xMerchant"},"authorization":{"max_amount":"20","expected_recipient":"0xMerchant","allowed_domains":["merchant.example"]}}'
+
+          status="$(awk 'toupper($1) ~ /^HTTP/ {code=$2} END{print code}' "$headers")"
+          test "$status" = "402"
+
+          payment_required="$(awk 'BEGIN{IGNORECASE=1} /^payment-required:/ {sub(/\r$/,""); sub(/^[^:]*:[[:space:]]*/,""); print; exit}' "$headers")"
+          test -n "$payment_required"
+
+          python3 - "$payment_required" <<'PY'
+          import base64, json, sys
+          raw = sys.argv[1]
+          raw += "=" * ((4 - len(raw) % 4) % 4)
+          data = json.loads(base64.urlsafe_b64decode(raw))
+          accepts = data["accepts"][0]
+
+          assert accepts["network"] == "eip155:8453"
+          assert accepts["amount"] == "100000"
+          assert accepts["payTo"].lower() == "0xe51c6e8e5c28bc36130880c178072e0914808040"
+          assert (data.get("extensions") or {}).get("bazaar")
+          assert data["resource"]["url"].startswith("https://")
+
+          print("FOXIFY_PAID_X402_LIVE=PASS")
+          PY
