@@ -26,8 +26,8 @@ node examples/foxify-discover.mjs
 
 The example does not hard-code the FOXIFY MCP endpoint. It:
 
-1. searches the Official MCP Registry for `agent-commerce`
-2. finds `io.github.speeedy10/foxify-agent-commerce`
+1. searches the Official MCP Registry for `payment-preflight`
+2. finds `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
 3. reads the Streamable HTTP URL from Registry metadata
 4. connects to the discovered MCP server
 5. lists the available tools
@@ -90,7 +90,7 @@ The seller receive wallet is non-custodial and offline; the public receive addre
 Official MCP Registry id:
 
 ```text
-io.github.speeedy10/foxify-agent-commerce
+io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight
 ```
 
 Remote transport:
