@@ -1,0 +1,34 @@
+name: Publish FOXIFY MCP Registry
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "mcp-registry/server.json"
+      - ".github/workflows/publish-mcp-registry.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" -o /tmp/mcp-publisher.tgz
+          tar -xzf /tmp/mcp-publisher.tgz -C /tmp mcp-publisher
+          chmod +x /tmp/mcp-publisher
+
+      - name: Validate registry metadata
+        run: /tmp/mcp-publisher validate mcp-registry/server.json
+
+      - name: Authenticate with GitHub OIDC
+        run: /tmp/mcp-publisher login github-oidc
+
+      - name: Publish to Official MCP Registry
+        run: /tmp/mcp-publisher publish mcp-registry/server.json
