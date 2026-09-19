@@ -1,0 +1,13 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.speeedy10/foxify-agent-commerce",
+  "title": "FOXIFY Agent Commerce",
+  "description": "Paid x402 transaction preflight for autonomous agents: authority, destination, expiry and replay.",
+  "version": "0.1.0",
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp"
+    }
+  ]
+}
