@@ -59,7 +59,7 @@ FOXIFY also exposes a remote machine-to-machine transaction preflight for autono
 - Official MCP Registry: `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
 - Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
 - Paid tool: `verify_agent_payment_intent`
-- x402 price: **$0.10 USDC per successful paid call on Base**
+- x402 price: **$0.05 USDC per successful paid call on Base**
 - decision output: `ALLOW / REVIEW / DENY` with evidence
 
 The endpoint checks mandate, amount, destination, merchant, expiry, and replay risk before execution. Registry presence and a valid payment challenge prove availability/distribution only; they do not imply customer demand or external revenue.
