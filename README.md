@@ -1,6 +1,7 @@
 # Agent Authority Check
 
 [![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
+[![FOXIFY MCP Live](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml)
 
 Open-source static authority preflight for MCP servers and tool-using AI agents, maintained by **FOXIFY**.
 
@@ -62,6 +63,8 @@ FOXIFY also exposes a remote machine-to-machine transaction preflight for autono
 - decision output: `ALLOW / REVIEW / DENY` with evidence
 
 The endpoint checks mandate, amount, destination, merchant, expiry, and replay risk before execution. Registry presence and a valid payment challenge prove availability/distribution only; they do not imply customer demand or external revenue.
+
+**Try the machine surface in ~30 seconds:** [MACHINE-QUICKSTART.md](./MACHINE-QUICKSTART.md)
 
 ## FOXIFY Agent Authority Quick Check · 25 Telegram Stars
 
