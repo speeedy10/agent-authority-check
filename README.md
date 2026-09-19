@@ -56,7 +56,7 @@ See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review c
 
 FOXIFY also exposes a remote machine-to-machine transaction preflight for autonomous agents.
 
-- Official MCP Registry: `io.github.speeedy10/foxify-agent-commerce`
+- Official MCP Registry: `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
 - Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
 - Paid tool: `verify_agent_payment_intent`
 - x402 price: **$0.10 USDC per successful paid call on Base**
