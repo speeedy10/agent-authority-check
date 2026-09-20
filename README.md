@@ -64,7 +64,8 @@ FOXIFY also exposes a remote machine-to-machine transaction preflight for autono
 
 The endpoint checks mandate, amount, destination, merchant, expiry, and replay risk before execution. Registry presence and a valid payment challenge prove availability/distribution only; they do not imply customer demand or external revenue.
 
-**Try the machine surface in ~30 seconds:** [MACHINE-QUICKSTART.md](./MACHINE-QUICKSTART.md)
+**Try the machine surface in ~30 seconds:** [MACHINE-QUICKSTART.md](./MACHINE-QUICKSTART.md)  
+**Guarded real x402 buyer example:** [examples/foxify-paid-call](./examples/foxify-paid-call)
 
 ## FOXIFY Agent Authority Quick Check · 25 Telegram Stars
 
