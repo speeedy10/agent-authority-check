@@ -77,13 +77,36 @@ curl -i -X POST \
 
 The current paid-call price is **$0.05 USDC on Base**.
 
-## 3. Pay only from your own local wallet/client
+## 3. Run the guarded buyer example
 
-FOXIFY never needs your seed phrase or private key.
+The repository includes a buyer example built on the current official `@x402/fetch` + EVM client flow.
 
-A real paid call should be completed by an x402-compatible client that signs locally with a wallet you control. Never paste wallet secrets into an issue, chat, curl command, or FOXIFY request.
+It is **dry-run by default** and checks the live quote before it ever enables a signer. It refuses to continue unless the challenge still matches Base mainnet, $0.05 USDC, the Base USDC contract, and the published FOXIFY treasury.
 
-The seller receive wallet is non-custodial and offline; the public receive address is the only wallet material used by the service.
+```bash
+cd examples/foxify-paid-call
+npm install
+npm start
+```
+
+Expected ending:
+
+```text
+DRY_RUN_QUOTE_OK
+```
+
+To execute one real paid call, use a wallet you control with sufficient Base USDC. Load the private key locally without putting it in shell history:
+
+```bash
+read -rsp 'EVM private key: ' EVM_PRIVATE_KEY; echo
+export EVM_PRIVATE_KEY
+FOXIFY_PAY=YES npm start
+unset EVM_PRIVATE_KEY
+```
+
+FOXIFY never receives the buyer private key. The x402 client signs locally, retries the HTTP 402 request, and prints the result plus settlement status.
+
+See [`examples/foxify-paid-call/README.md`](./examples/foxify-paid-call/README.md) for the exact guardrails.
 
 ## 4. MCP connection details
 
