@@ -73,7 +73,7 @@ Registry presence and valid x402 challenges prove availability/distribution only
 **Try the machine surface in ~30 seconds:** [MACHINE-QUICKSTART.md](./MACHINE-QUICKSTART.md)  
 **Guarded real x402 payment buyer example:** [examples/foxify-paid-call](./examples/foxify-paid-call)
 
-## FOXIFY Agent Authority Quick Check · 25 Telegram Stars
+## FOXIFY Agent Authority Quick Check · 99 Telegram Stars
 
 Want the result without running the scanner yourself?
 
@@ -81,7 +81,7 @@ See a synthetic delivery example first: **[SAMPLE-REPORT.md](./SAMPLE-REPORT.md)
 
 FOXIFY offers a paid Quick Check for **one public GitHub repository**:
 
-- 25 Telegram Stars
+- 99 Telegram Stars launch price
 - public GitHub repositories only
 - bounded static public-source analysis
 - no credentials
@@ -103,6 +103,7 @@ No `audit:` prefix is required.
 FOXIFY is focused on authority mapping for MCP servers and tool-using AI agents: what an agent can reach, mutate, execute, send, delete, or authorize, and which visible guardrails sit around those actions.
 
 Website: **https://foxify.pro**  
+Security practice: **https://security.foxify.pro**  
 Contact: **contact@foxify.pro**
 
 ## Safety
