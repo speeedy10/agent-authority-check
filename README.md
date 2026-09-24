@@ -121,7 +121,9 @@ FOXIFY offers a paid Quick Check for **one public GitHub repository**:
 
 Start here:
 
-**https://foxify.pro**
+**Run Quick Check:** https://foxify.pro/start?src=github-readme
+
+**See a synthetic sample report:** https://foxify.pro/sample-report?src=github-readme
 
 After payment, paste the public GitHub repository URL directly into the FOXIFY chat. The same FOXIFY card moves from **Credit Ready → Processing → Report Ready**.
 
