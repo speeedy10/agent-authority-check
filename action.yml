@@ -1,0 +1,58 @@
+name: "FOXIFY Agent Authority Check"
+description: "Static authority preflight for MCP servers and tool-using AI agents. Produces evidence JSON without executing target code."
+author: "FOXIFY"
+branding:
+  icon: "shield"
+  color: "gray-dark"
+
+inputs:
+  path:
+    description: "Repository or source-tree path to scan"
+    required: false
+    default: "."
+  output:
+    description: "Path for JSON evidence output"
+    required: false
+    default: "foxify-authority.json"
+
+outputs:
+  evidence_path:
+    description: "Path to the generated JSON evidence"
+    value: ${{ steps.scan.outputs.evidence_path }}
+  evidence_sha256:
+    description: "Evidence hash emitted by the scanner"
+    value: ${{ steps.scan.outputs.evidence_sha256 }}
+
+runs:
+  using: "composite"
+  steps:
+    - id: scan
+      shell: bash
+      run: |
+        set -euo pipefail
+        output="${{ inputs.output }}"
+        python3 "$GITHUB_ACTION_PATH/scan.py" "${{ inputs.path }}" > "$output"
+        sha="$(python3 - "$output" <<'PY'
+        import json,sys
+        print(json.load(open(sys.argv[1]))["evidence_sha256"])
+        PY
+        )"
+        {
+          echo "evidence_path=$output"
+          echo "evidence_sha256=$sha"
+        } >> "$GITHUB_OUTPUT"
+        python3 - "$output" >> "$GITHUB_STEP_SUMMARY" <<'PY'
+        import json,sys
+        d=json.load(open(sys.argv[1]))
+        print("## FOXIFY Agent Authority Check")
+        print()
+        print(f"- Files scanned: **{d['files_scanned']}**")
+        print(f"- Authority classes observed: **{d['review_class_count']}**")
+        print(f"- Raw locations: **{d['raw_location_count']}**")
+        print(f"- Verdict: **{d['verdict']}**")
+        print(f"- Evidence SHA-256: `{d['evidence_sha256']}`")
+        print()
+        print("> Scanner observations are not vulnerability findings. Verify primitive + reachability + consequence.")
+        print()
+        print("[FOXIFY Quick Check](https://foxify.pro/) · [MCP security audit](https://foxify.pro/mcp-security-audit/) · [FOXIFY Security](https://security.foxify.pro/)")
+        PY
