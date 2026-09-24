@@ -42,6 +42,35 @@ python3 scan.py /path/to/repository > authority-scan.json
 
 No packages are required. The scanner makes no network requests and does not execute target code.
 
+## GitHub Action
+
+Add FOXIFY to CI without installing a package:
+
+```yaml
+name: Agent Authority Check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  authority-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: speeedy10/agent-authority-check@main
+        with:
+          path: .
+          output: foxify-authority.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: foxify-authority-evidence
+          path: foxify-authority.json
+```
+
+The Action writes evidence JSON and a concise job summary. It is intentionally observation-only: a scanner hit is not promoted to a vulnerability without primitive + reachability + consequence.
+
 ## Review workflow
 
 1. Start with classes that combine untrusted input and privileged authority.
