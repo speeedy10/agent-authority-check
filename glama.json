@@ -1,0 +1,19 @@
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": ["speeedy10"],
+  "name": "FOXIFY Agent Authority + Payment Preflight",
+  "description": "Remote MCP preflight for exact agent action authority and payment intent before consequential execution.",
+  "type": "mcp_server",
+  "status": "beta",
+  "transport": ["streamable-http"],
+  "keywords": [
+    "ai-agents",
+    "mcp",
+    "security",
+    "authority",
+    "preflight",
+    "x402",
+    "payments",
+    "tool-calls"
+  ]
+}
