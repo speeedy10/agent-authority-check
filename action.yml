@@ -54,5 +54,5 @@ runs:
         print()
         print("> Scanner observations are not vulnerability findings. Verify primitive + reachability + consequence.")
         print()
-        print("[FOXIFY Quick Check](https://foxify.pro/) · [MCP security audit](https://foxify.pro/mcp-security-audit/) · [FOXIFY Security](https://security.foxify.pro/)")
+        print("[Run FOXIFY Quick Check](https://foxify.pro/start?src=github-action) · [Sample report](https://foxify.pro/sample-report?src=github-action) · [MCP security audit](https://foxify.pro/mcp-security-audit/) · [FOXIFY Security](https://security.foxify.pro/)")
         PY
