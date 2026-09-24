@@ -52,20 +52,26 @@ No packages are required. The scanner makes no network requests and does not exe
 
 See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review checklist and [`EVIDENCE-SCHEMA.md`](./EVIDENCE-SCHEMA.md) for a compact evidence record.
 
-## FOXIFY Agent Transaction Preflight
+## FOXIFY Agent Commerce — live machine preflights
 
-FOXIFY also exposes a remote machine-to-machine transaction preflight for autonomous agents.
+FOXIFY also exposes remote machine-to-machine x402 preflights for autonomous agents.
 
 - Official MCP Registry: `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
+- Registry version: **0.2.0**
 - Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
-- Paid tool: `verify_agent_payment_intent`
-- x402 price: **$0.05 USDC per successful paid call on Base**
+- free metadata tool: `foxify_preflight_info`
+- payment tool: `verify_agent_payment_intent` — **$0.05 USDC on Base**
+- action-authority tool: `verify_agent_action_intent` — **$0.25 USDC on Base**
 - decision output: `ALLOW / REVIEW / DENY` with evidence
 
-The endpoint checks mandate, amount, destination, merchant, expiry, and replay risk before execution. Registry presence and a valid payment challenge prove availability/distribution only; they do not imply customer demand or external revenue.
+The payment preflight checks mandate, amount, destination, merchant, expiry, and replay risk.
+
+The action-authority preflight binds the exact subject, tool, operation, target, canonical parameters, authority lifetime, retry state, prior outcome, and postcondition contract before a consequential action executes.
+
+Registry presence and valid x402 challenges prove availability/distribution only; they do not imply customer demand or external revenue. Bazaar cataloging is treated separately and is not claimed until a supporting facilitator actually catalogs the resource after external settlement.
 
 **Try the machine surface in ~30 seconds:** [MACHINE-QUICKSTART.md](./MACHINE-QUICKSTART.md)  
-**Guarded real x402 buyer example:** [examples/foxify-paid-call](./examples/foxify-paid-call)
+**Guarded real x402 payment buyer example:** [examples/foxify-paid-call](./examples/foxify-paid-call)
 
 ## FOXIFY Agent Authority Quick Check · 25 Telegram Stars
 
