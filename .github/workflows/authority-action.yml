@@ -17,7 +17,7 @@ jobs:
 
       - name: Run FOXIFY Agent Authority Check
         id: foxify
-        uses: ./
+        uses: speeedy10/agent-authority-check@v1
         with:
           path: .
           output: foxify-authority.json
