@@ -1,0 +1,42 @@
+name: FOXIFY Authority Action
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authority-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run FOXIFY Agent Authority Check
+        id: foxify
+        uses: ./
+        with:
+          path: .
+          output: foxify-authority.json
+
+      - name: Verify evidence shape
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          d=json.load(open("foxify-authority.json"))
+          assert d["schema"]=="AGENT_AUTHORITY_PREFLIGHT_V1"
+          assert d["verdict"]=="OBSERVATIONS_ONLY"
+          assert len(d["evidence_sha256"])==64
+          print("FOXIFY_ACTION_EVIDENCE=PASS", d["evidence_sha256"])
+          PY
+
+      - name: Upload authority evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: foxify-authority-evidence
+          path: foxify-authority.json
