@@ -1,9 +1,9 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight",
-  "title": "FOXIFY Agent Payment Preflight",
-  "description": "x402 payment preflight for agents: mandate, amount, destination, merchant, expiry and replay.",
-  "version": "0.1.0",
+  "title": "FOXIFY Agent Authority + Payment Preflight",
+  "description": "x402 preflight for autonomous agents: exact action authority (subject, tool, operation, target, parameters, retries and postconditions) plus payment mandate, amount, destination, merchant, expiry and replay.",
+  "version": "0.2.0",
   "remotes": [
     {
       "type": "streamable-http",
