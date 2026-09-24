@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: speeedy10/agent-authority-check@main
+      - uses: speeedy10/agent-authority-check@v1
         with:
           path: .
           output: foxify-authority.json
