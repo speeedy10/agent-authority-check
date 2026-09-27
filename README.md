@@ -88,6 +88,8 @@ FOXIFY also exposes remote machine-to-machine x402 preflights for autonomous age
 - Official MCP Registry: `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
 - Registry version: **0.2.0**
 - Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
+- Branded x402 payment-intent endpoint: `https://x402.foxify.pro/preflight`
+- Machine-readable FOXIFY overview: `https://foxify.pro/llms.txt`
 - free metadata tool: `foxify_preflight_info`
 - payment tool: `verify_agent_payment_intent` — **$0.05 USDC on Base**
 - action-authority tool: `verify_agent_action_intent` — **$0.25 USDC on Base**
