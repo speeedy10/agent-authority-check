@@ -3,7 +3,7 @@ import { ExactEvmScheme } from "@x402/evm/exact/client";
 import { privateKeyToAccount } from "viem/accounts";
 
 const ENDPOINT =
-  "https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-preflight-paid";
+  "https://x402.foxify.pro/preflight";
 
 const EXPECTED = {
   network: "eip155:8453",

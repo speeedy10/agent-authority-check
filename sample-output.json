@@ -1,6 +1,6 @@
 {
   "schema": "AGENT_AUTHORITY_PREFLIGHT_V1",
-  "root": "/home/fox/labs/nyx-research-os/commercial/products/agent-authority-preflight-kit/_fixture",
+  "root": "/workspace/example-agent-server",
   "files_scanned": 1,
   "review_classes": [
     {

@@ -1,8 +1,5 @@
 # Agent Authority Check
 
-[![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
-[![FOXIFY MCP Live](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml)
-
 Open-source deterministic authority preflight for MCP servers and tool-using AI agents, maintained by **FOXIFY** — the operating layer between intent and consequence.
 
 FOXIFY helps humans and agents read the current situation, bind the right authority, preflight a consequential action, and verify what actually happened. Models may assist with reasoning; evidence, state, authority, and receipts own the result.
@@ -61,10 +58,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: speeedy10/agent-authority-check@v1
-        with:
-          path: .
-          output: foxify-authority.json
+      - name: Download pinned FOXIFY scanner
+        run: |
+          curl -fsS https://foxify.pro/downloads/agent-authority-check-v1.py -o /tmp/foxify-authority.py
+          echo "122c6606b35b3c99436a702beca5efa6efa235550e486722ded1e8d64d03009e  /tmp/foxify-authority.py" | sha256sum -c -
+      - name: Run authority preflight
+        run: python3 /tmp/foxify-authority.py . > foxify-authority.json
       - uses: actions/upload-artifact@v4
         with:
           name: foxify-authority-evidence
@@ -87,10 +86,11 @@ See [`AUTHORITY-CHECKLIST.md`](./AUTHORITY-CHECKLIST.md) for the manual review c
 
 FOXIFY also exposes remote machine-to-machine x402 preflights for autonomous agents.
 
-- Official MCP Registry: `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
-- Registry version: **0.2.0**
-- Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
-- Branded x402 payment-intent endpoint: `https://x402.foxify.pro/preflight`
+- FOXIFY service name: `pro.foxify/agent-commerce`
+- Service metadata version: **0.2.1**
+- Remote MCP transport: `https://foxify.pro/mcp`
+- x402 payment-intent endpoint: `https://x402.foxify.pro/preflight`
+- Exact action-authority endpoint: `https://foxify.pro/action-preflight`
 - Live FOXIFY front door: `https://foxify.pro/`
 - Machine quickstart: `https://foxify.pro/machine-start`
 - Read-only public runtime status: `https://foxify.pro/api/public/runtime-status`
@@ -142,7 +142,7 @@ FOXIFY is the operating layer between intent and consequence for humans and agen
 
 - Website and live topology: **https://foxify.pro**
 - Machine quickstart: **https://foxify.pro/machine-start**
-- Security practice: **https://security.foxify.pro**
+- Security practice: **https://foxify.pro/security-practice/**
 - Contact: **contact@foxify.pro**
 
 ## Safety

@@ -27,7 +27,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          url='https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-preflight-paid'
+          url='https://x402.foxify.pro/preflight'
           headers="$(mktemp)"
           curl -sS -D "$headers" -o /dev/null -X POST "$url"             -H 'content-type: application/json'             -H 'accept: application/json'             -d '{"intent_id":"github-live-proof","nonce":"github-live-nonce-12345678","expires_at":"2030-01-01T00:00:00Z","agent":{"signature_verified":true},"merchant":{"domain":"merchant.example"},"payment":{"network":"eip155:8453","currency":"USDC","amount":"10","recipient":"0xMerchant"},"authorization":{"max_amount":"20","expected_recipient":"0xMerchant","allowed_domains":["merchant.example"]}}'
 

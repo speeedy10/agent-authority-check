@@ -1,15 +1,4 @@
-const alias = "io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight";
-const registry = new URL("https://registry.modelcontextprotocol.io/v0.1/servers");
-registry.searchParams.set("version", "latest");
-registry.searchParams.set("limit", "100");
-registry.searchParams.set("search", "payment-preflight");
-
-const listing = await (await fetch(registry)).json();
-const entry = (listing.servers || []).find(x => x && x.server && x.server.name === alias);
-if (!entry) throw new Error("FOXIFY not found in Official MCP Registry search");
-
-const remote = (entry.server.remotes || []).find(x => x.type === "streamable-http")?.url;
-if (!remote) throw new Error("No Streamable HTTP remote");
+const remote = "https://foxify.pro/mcp";
 
 function decodeBody(text) {
   const trimmed = text.trim();
@@ -61,8 +50,7 @@ const info = await rpc(3, "tools/call", {
 const infoText = (((info.result || {}).content || []).find(x => x.type === "text") || {}).text || "{}";
 
 console.log(JSON.stringify({
-  registryQuery: "payment-preflight",
-  discovered: entry.server.name,
+  service: "pro.foxify/agent-commerce",
   remote,
   server: initialized.result && initialized.result.serverInfo,
   tools: ((tools.result && tools.result.tools) || []).map(tool => tool.name),

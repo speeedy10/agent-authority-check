@@ -1,13 +1,13 @@
 {
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
-  "name": "io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight",
-  "title": "FOXIFY Agent Authority + Payment Preflight",
-  "description": "x402 agent preflight: exact action authority plus payment mandate, destination, expiry and replay.",
-  "version": "0.2.0",
+  "name": "pro.foxify/agent-commerce",
+  "title": "FOXIFY Agent Commerce",
+  "description": "Hosted x402 preflight for action authority, payment mandate, destination, expiry and replay.",
+  "version": "0.2.1",
   "remotes": [
     {
       "type": "streamable-http",
-      "url": "https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp"
+      "url": "https://foxify.pro/mcp"
     }
   ]
 }

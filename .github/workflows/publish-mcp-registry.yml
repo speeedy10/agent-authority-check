@@ -1,4 +1,4 @@
-name: Publish FOXIFY MCP Registry
+name: Validate FOXIFY MCP Registry Metadata
 
 on:
   workflow_dispatch:
@@ -9,10 +9,9 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 jobs:
-  publish:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,11 +23,19 @@ jobs:
           tar -xzf /tmp/mcp-publisher.tgz -C /tmp mcp-publisher
           chmod +x /tmp/mcp-publisher
 
-      - name: Validate registry metadata
+      - name: Validate canonical FOXIFY metadata
         run: /tmp/mcp-publisher validate mcp-registry/server.json
 
-      - name: Authenticate with GitHub OIDC
-        run: /tmp/mcp-publisher login github-oidc
+      - name: Confirm branded remote
+        run: |
+          python3 - <<'PY'
+          import json
+          d=json.load(open('mcp-registry/server.json'))
+          assert d['name']=='pro.foxify/agent-commerce'
+          assert d['version']=='0.2.1'
+          assert d['remotes']==[{'type':'streamable-http','url':'https://foxify.pro/mcp'}]
+          print('FOXIFY_REGISTRY_METADATA_PASS')
+          PY
 
-      - name: Publish to Official MCP Registry
-        run: /tmp/mcp-publisher publish mcp-registry/server.json
+# Canonical domain publication is signed by the FOXIFY domain key from its
+# private owner boundary. GitHub validates metadata but never receives that key.

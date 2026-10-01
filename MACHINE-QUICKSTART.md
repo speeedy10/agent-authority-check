@@ -1,70 +1,75 @@
 # FOXIFY Agent Commerce — 30-second quickstart
 
-FOXIFY Agent Commerce is a remote MCP service for checking consequential autonomous-agent actions before execution.
+FOXIFY Agent Commerce is a hosted MCP service for checking consequential autonomous-agent actions before execution.
 
-It currently exposes two paid preflight tools:
+It exposes:
 
+- `foxify_preflight_info` — free capability, price, network, custody and boundary metadata
 - `verify_agent_payment_intent` — payment mandate / amount / destination / merchant / expiry / replay — **$0.05 USDC**
 - `verify_agent_action_intent` — exact subject / tool / operation / target / parameter / retry / postcondition authority — **$0.25 USDC**
 
-Both return one of:
+Paid preflights return `ALLOW`, `REVIEW`, or `DENY` with machine-readable evidence. Settlement uses x402 on Base.
 
-- `ALLOW`
-- `REVIEW`
-- `DENY`
+## 1. Connect the remote MCP server
 
-with machine-readable evidence. Prices are settled with x402 on Base.
+No package installation or FOXIFY account is required for free discovery.
 
-## 1. Discover it from the Official MCP Registry
-
-No package installation is required for this discovery demo.
-
-Requirements:
-
-- Node.js 18+
-
-Run:
-
-```bash
-node examples/foxify-discover.mjs
+```json
+{
+  "mcpServers": {
+    "foxify": {
+      "transport": "streamable-http",
+      "url": "https://foxify.pro/mcp"
+    }
+  }
+}
 ```
 
-The example does not hard-code the FOXIFY MCP endpoint. It:
+After connection:
 
-1. searches the Official MCP Registry for `payment-preflight`
-2. finds `io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight`
-3. reads the Streamable HTTP URL from Registry metadata
-4. connects to the discovered MCP server
-5. lists the available tools
-6. calls the free `foxify_preflight_info` tool
+1. list the available tools;
+2. call `foxify_preflight_info` for free;
+3. use a paid tool only when a real payment or consequential action is ready for preflight.
 
-Expected tools:
+Service name:
 
-- `foxify_preflight_info` — free metadata
-- `verify_agent_payment_intent` — paid payment-intent preflight
-- `verify_agent_action_intent` — paid exact action-authority preflight
+```text
+pro.foxify/agent-commerce
+```
 
-## 2. Inspect the paid HTTP surfaces without paying
+Transport:
+
+```text
+streamable-http
+```
+
+Traditional API authentication:
+
+```text
+none for free capability discovery
+```
+
+## 2. Inspect the HTTP surfaces without paying
 
 Payment-intent preflight:
 
 ```text
-https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-preflight-paid
+https://x402.foxify.pro/preflight
 ```
 
 Current price: **$0.05 USDC on Base**.
 
-Action-authority preflight:
+Exact action-authority preflight:
 
 ```text
-https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-action-preflight-paid
+https://foxify.pro/action-preflight
 ```
 
 Current price: **$0.25 USDC on Base**.
 
-A valid unpaid POST to either route returns HTTP `402 Payment Required` with machine-readable x402 requirements. A GET to the action-authority route returns free metadata, including the canonical parameter-hash rule.
+A valid unpaid POST returns HTTP `402 Payment Required` with machine-readable x402 requirements. A GET to the action-authority route returns free metadata, including the canonical parameter-hash rule.
 
-The action-authority tool binds the exact:
+The action-authority preflight binds the exact:
 
 - acting subject
 - tool and operation
@@ -78,68 +83,13 @@ The action-authority tool binds the exact:
 
 A consequential retry after an unresolved prior outcome is denied rather than silently retried.
 
-## 3. Run the guarded payment buyer example
+## 3. Payment flow
 
-The repository includes a buyer example for the **$0.05 payment-intent preflight** built on the official `@x402/fetch` + EVM client flow.
-
-It is **dry-run by default** and checks the live quote before it ever enables a signer. It refuses to continue unless the challenge still matches Base mainnet, $0.05 USDC, the Base USDC contract, and the published FOXIFY treasury.
-
-```bash
-cd examples/foxify-paid-call
-npm install
-npm start
-```
-
-Expected ending:
-
-```text
-DRY_RUN_QUOTE_OK
-```
-
-To execute one real paid payment-preflight call, use a wallet you control with sufficient Base USDC. Load the private key locally without putting it in shell history:
-
-```bash
-read -rsp 'EVM private key: ' EVM_PRIVATE_KEY; echo
-export EVM_PRIVATE_KEY
-FOXIFY_PAY=YES npm start
-unset EVM_PRIVATE_KEY
-```
-
-FOXIFY never receives the buyer private key. The x402 client signs locally, retries the HTTP 402 request, and prints the result plus settlement status.
-
-See [`examples/foxify-paid-call/README.md`](./examples/foxify-paid-call/README.md) for the exact guardrails.
-
-## 4. MCP connection details
-
-Official MCP Registry id:
-
-```text
-io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight
-```
-
-Registry version:
-
-```text
-0.2.0
-```
-
-Remote transport:
-
-```text
-https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp
-```
-
-Transport:
-
-```text
-streamable-http
-```
-
-Traditional API authentication:
-
-```text
-none
-```
+1. Send the intended request and read the 402 terms.
+2. Verify Base, native USDC, exact amount and recipient before signing.
+3. Sign with a wallet or compatible x402 client you control. FOXIFY never needs the seed phrase or private key.
+4. Retry the same request once with the payment envelope.
+5. Persist result and settlement evidence. If the outcome is ambiguous, reconcile it; do not create a second payment.
 
 Paid tool settlement:
 
@@ -148,8 +98,16 @@ verify_agent_payment_intent -> x402 exact / Base / USDC / $0.05
 verify_agent_action_intent  -> x402 exact / Base / USDC / $0.25
 ```
 
+## 4. Public status and contracts
+
+- Front door: `https://foxify.pro/`
+- Machine quickstart: `https://foxify.pro/machine-start`
+- Runtime status: `https://foxify.pro/api/public/runtime-status`
+- Machine overview: `https://foxify.pro/llms.txt`
+- MCP endpoint: `https://foxify.pro/mcp`
+- Payment preflight: `https://x402.foxify.pro/preflight`
+- Action preflight: `https://foxify.pro/action-preflight`
+
 ## Evidence boundary
 
-A live Registry listing, successful MCP connection, or HTTP/x402 payment challenge proves availability and payment-path readiness. It does **not** prove customer demand or settled external revenue.
-
-Bazaar discovery metadata is present on the paid resources, but catalog listing depends on a real external settlement through a supporting facilitator. FOXIFY does not self-pay merely to manufacture a listing or revenue signal.
+A successful connection or valid HTTP/x402 challenge proves availability and protocol readiness. It does **not** prove customer demand, retained usage, or independently attributable external revenue.
