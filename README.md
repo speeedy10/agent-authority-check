@@ -3,7 +3,9 @@
 [![Test](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/test.yml)
 [![FOXIFY MCP Live](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml/badge.svg)](https://github.com/speeedy10/agent-authority-check/actions/workflows/mcp-live.yml)
 
-Open-source static authority preflight for MCP servers and tool-using AI agents, maintained by **FOXIFY**.
+Open-source deterministic authority preflight for MCP servers and tool-using AI agents, maintained by **FOXIFY** — the operating layer between intent and consequence.
+
+FOXIFY helps humans and agents read the current situation, bind the right authority, preflight a consequential action, and verify what actually happened. Models may assist with reasoning; evidence, state, authority, and receipts own the result.
 
 It answers one narrow question before a deeper review:
 
@@ -89,6 +91,9 @@ FOXIFY also exposes remote machine-to-machine x402 preflights for autonomous age
 - Registry version: **0.2.0**
 - Remote MCP transport: `https://xqmokxkbgewocuiinnot.supabase.co/functions/v1/foxify-agent-commerce-mcp`
 - Branded x402 payment-intent endpoint: `https://x402.foxify.pro/preflight`
+- Live FOXIFY front door: `https://foxify.pro/`
+- Machine quickstart: `https://foxify.pro/machine-start`
+- Read-only public runtime status: `https://foxify.pro/api/public/runtime-status`
 - Machine-readable FOXIFY overview: `https://foxify.pro/llms.txt`
 - free metadata tool: `foxify_preflight_info`
 - payment tool: `verify_agent_payment_intent` — **$0.05 USDC on Base**
@@ -133,11 +138,12 @@ No `audit:` prefix is required.
 
 ## FOXIFY
 
-FOXIFY is focused on authority mapping for MCP servers and tool-using AI agents: what an agent can reach, mutate, execute, send, delete, or authorize, and which visible guardrails sit around those actions.
+FOXIFY is the operating layer between intent and consequence for humans and agents. It maps what an agent can reach, change, execute, send, remove, pay, or authorize; binds the visible authority around that action; and verifies the outcome before success is promoted.
 
-Website: **https://foxify.pro**  
-Security practice: **https://security.foxify.pro**  
-Contact: **contact@foxify.pro**
+- Website and live topology: **https://foxify.pro**
+- Machine quickstart: **https://foxify.pro/machine-start**
+- Security practice: **https://security.foxify.pro**
+- Contact: **contact@foxify.pro**
 
 ## Safety
 
