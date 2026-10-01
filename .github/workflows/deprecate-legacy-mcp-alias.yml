@@ -1,0 +1,32 @@
+name: Deprecate legacy FOXIFY MCP alias
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - ".github/workflows/deprecate-legacy-mcp-alias.yml"
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  deprecate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install mcp-publisher
+        run: |
+          curl -fsSL "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_linux_amd64.tar.gz" -o /tmp/mcp-publisher.tgz
+          tar -xzf /tmp/mcp-publisher.tgz -C /tmp mcp-publisher
+          chmod +x /tmp/mcp-publisher
+
+      - name: Authenticate with GitHub OIDC
+        run: /tmp/mcp-publisher login github-oidc
+
+      - name: Deprecate compatibility namespace
+        run: |
+          /tmp/mcp-publisher status \
+            --status deprecated \
+            --all-versions \
+            --message "Use canonical FOXIFY service pro.foxify/agent-commerce at https://foxify.pro/mcp" \
+            io.github.speeedy10/foxify-x402-agent-commerce-payment-preflight
