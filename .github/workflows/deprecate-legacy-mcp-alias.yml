@@ -25,7 +25,7 @@ jobs:
 
       - name: Deprecate compatibility namespace
         run: |
-          /tmp/mcp-publisher status \
+          printf 'y\n' | /tmp/mcp-publisher status \
             --status deprecated \
             --all-versions \
             --message "Use canonical FOXIFY service pro.foxify/agent-commerce at https://foxify.pro/mcp" \
